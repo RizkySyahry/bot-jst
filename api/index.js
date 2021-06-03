@@ -31,7 +31,7 @@ bot.onText(/\/predict/, (msg) => {
     state = i;
 });
 
-bot.onText('message', (msg) => {
+bot.on('message', (msg) => {
     if(state == 1){
         s = msg.text.split("|");
         i = s[0]
@@ -40,8 +40,7 @@ bot.onText('message', (msg) => {
             [
                 parsefloat(s[0]), // string to float
                 parsefloat(s[1])
-            ]
-          
+            ]          
          ).then((jres)=>{
             bot.sendMessage(
                 msg.chat.id,
@@ -60,8 +59,8 @@ bot.onText('message', (msg) => {
 r.get('/prediction/:i/:r', function(req, res, next) {    
     model.predict(
         [
-            parseFloat(req.params.i), // string to float
-            parseFloat(req.params.r)
+            parsefloat(req.params.i), // string to float
+            parsefloat(req.params.r)
         ]
     ).then((jres)=>{
         res.json(jres);
